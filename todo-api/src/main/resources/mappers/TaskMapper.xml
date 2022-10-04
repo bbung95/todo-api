@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbung.todoapi.task.mapper.TaskMapper">
+
+    <insert id="insertTask" useGeneratedKeys="true" keyProperty="id">
+        INSERT
+        INTO task
+        (
+            title, contents, status, orders, importance, create_date
+        )
+        VALUES
+        (
+            #{title}, #{contents}, #{status}, #{orders}, #{importance}, NOW()
+        )
+    </insert>
+
+    <select id="findById" resultType="TaskDto">
+        SELECT
+        *
+        FROM task
+        WHERE id = #{id}
+    </select>
+
+    <select id="findTaskList" resultType="TaskListDto">
+        SELECT
+            *
+        FROM task
+        <where>
+            <if test="searchType != null and keyword != null">
+                <choose>
+                    <when test="searchType == 'title' ">
+                        title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="searchType == 'contents' ">
+                        contents LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+        ORDER BY orders ASC
+    </select>
+
+    <update id="updateTask">
+        UPDATE
+        task
+        SET
+        title = #{title},
+        contents = #{contents},
+        importance = #{importance},
+        modify_date = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateTaskStatus">
+        UPDATE
+        task
+        SET
+        status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateTaskImportance">
+        UPDATE
+        task
+        SET
+        importance = #{importance}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTask">
+        DELETE
+        FROM task
+        WHERE id = #{id}
+    </delete>
+
+    <select id="findLastOrder" resultType="int">
+        SELECT
+        orders
+        FROM task
+        ORDER BY orders DESC
+        LIMIT 1
+    </select>
+</mapper>
