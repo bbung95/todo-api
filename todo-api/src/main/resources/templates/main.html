@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo-List</title>
+    <style>
+        #main{
+            width: 980px;
+            margin: 0 auto;
+        }
+
+        .task_el{
+            border: gray 1px solid;
+            background: cornsilk;
+        }
+
+        h1{
+            border-bottom: #d0d0b7 solid 1px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="main">
+
+    <h1>Todo-List</h1>
+    <h3>목록</h3>
+    <div id="task_list"></div>
+
+    <div>
+        <div>
+            제목 : <input name="title" type="text"/>
+        </div>
+        <div>
+            내용 : <input name="contents" type="text"/>
+        </div>
+        <div>
+            중요도 : <select name="importance">
+                <option value="HIGH">High</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="LOW">Low</option>
+            </select>
+            <button onclick="addTask()">등록</button>
+        </div>
+    </div>
+
+    <script src="/js/task.js"></script>
+</div>
+</body>
+</html>
