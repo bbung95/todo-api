@@ -5,9 +5,11 @@ import com.bbung.todoapi.domain.User;
 import com.bbung.todoapi.user.dto.UserDto;
 import com.bbung.todoapi.user.dto.UserFormDto;
 import com.bbung.todoapi.user.dto.UserLoginForm;
+import com.bbung.todoapi.user.dto.UserUpdateFormDto;
 import com.bbung.todoapi.user.enums.UserRole;
 import com.bbung.todoapi.user.exception.DuplicationUsername;
 import com.bbung.todoapi.user.mapper.UserMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,6 +30,8 @@ public class UserService implements UserDetailsService {
     private final ModelMapper modelMapper;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public UserInfo loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -73,5 +78,19 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(Integer.toString(id)));
 
         return findUserDto;
+    }
+
+    public int updateUser(Integer id, UserUpdateFormDto userUpdateFormDto){
+
+        int result = 0;
+
+        if(userUpdateFormDto.getType().equals("password")){
+            String password = passwordEncoder.encode(userUpdateFormDto.getValue());
+            userMapper.updatePassword(id, password);
+        }else if (userUpdateFormDto.getType().equals("nickname")){
+            userMapper.updateNickname(id, userUpdateFormDto.getValue());
+        }
+
+        return result;
     }
 }

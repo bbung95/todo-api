@@ -8,7 +8,6 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@Builder
 public class UserUpdateFormDto {
 
     private String type;

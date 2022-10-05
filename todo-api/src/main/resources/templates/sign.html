@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo-List</title>
+    <style>
+        #main{
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .task_el{
+            border: gray 1px solid;
+            background: cornsilk;
+        }
+
+        h1{
+            border-bottom: #d0d0b7 solid 1px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="main">
+
+    <h1>Todo-List</h1>
+    <h3>Sign</h3>
+
+    <div id="signForm">
+        <div>
+            아이디 : <input name="username" type="text"/>
+        </div>
+        <div>
+            비밀번호 : <input name="password" type="password"/>
+        </div>
+        <div>
+            닉네임 : <input name="nickname" type="text"/>
+        </div>
+        <div>
+            <button onclick="sign()">가입</button>
+        </div>
+    </div>
+
+</div>
+<script src="/js/sign.js"></script>
+</body>
+</html>

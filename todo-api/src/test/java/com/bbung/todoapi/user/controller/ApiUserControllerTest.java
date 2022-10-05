@@ -1,6 +1,8 @@
 package com.bbung.todoapi.user.controller;
 
 import com.bbung.todoapi.user.dto.UserFormDto;
+import com.bbung.todoapi.user.dto.UserLoginForm;
+import com.bbung.todoapi.user.dto.UserUpdateFormDto;
 import com.bbung.todoapi.user.mapper.UserMapper;
 import com.bbung.todoapi.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -91,4 +94,72 @@ class ApiUserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("User 로그인 토큰 발급 테스트")
+    public void loginAndTokenTest() throws Exception {
+
+        UserFormDto userFormDto = new UserFormDto();
+        userFormDto.setUsername("bbung");
+        userFormDto.setPassword("1234");
+        userFormDto.setNickname("rai");
+        userService.saveUser(userFormDto);
+
+        UserLoginForm loginForm = new UserLoginForm();
+        loginForm.setUsername("bbung");
+        loginForm.setPassword("1234");
+
+        mockMvc.perform(post("/api/user/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginForm)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @DisplayName("User 로그인시 아이디가 존재하지 않을 경우 테스트")
+    public void loginAndTokenNotFoundTest() throws Exception {
+
+        UserLoginForm loginForm = new UserLoginForm();
+        loginForm.setUsername("bbung");
+        loginForm.setPassword("1234");
+
+        mockMvc.perform(post("/api/user/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginForm)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    @DisplayName("User 비밀번호 변경 테스트")
+    public void hello() throws Exception {
+
+        UserFormDto userFormDto = new UserFormDto();
+        userFormDto.setUsername("bbung");
+        userFormDto.setPassword("1234");
+        userFormDto.setNickname("rai");
+        int id = userService.saveUser(userFormDto);
+
+        UserUpdateFormDto userUpdateFormDto = new UserUpdateFormDto();
+        userUpdateFormDto.setType("password");
+        userUpdateFormDto.setValue("12345");
+
+        mockMvc.perform(patch("/api/user/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userUpdateFormDto)))
+            .andDo(print())
+                .andExpect(status().isOk());
+
+        UserLoginForm loginForm = new UserLoginForm();
+        loginForm.setUsername("bbung");
+        loginForm.setPassword("12345");
+
+        mockMvc.perform(post("/api/user/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginForm)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }

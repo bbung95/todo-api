@@ -5,9 +5,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.bbung.todoapi.config.security.UserInfo;
 import com.bbung.todoapi.domain.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class JwtUtil {
 
     @Value("${jwt.key}")
