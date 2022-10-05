@@ -24,11 +24,9 @@
 <div id="main">
 
     <h1>Todo-List</h1>
-    <h3>목록</h3>
+    <h3>상세보기</h3>
 
-    <div id="task_list"></div>
-
-    <div id="taskAddForm">
+    <div id="taskDetailForm">
         <div>
             제목 : <input name="title" type="text"/>
         </div>
@@ -41,11 +39,11 @@
                 <option value="MEDIUM">Medium</option>
                 <option value="LOW">Low</option>
             </select>
-            <button onclick="addTask()">등록</button>
+            <button onclick="addTask()">수정</button>
         </div>
     </div>
 
-    <script src="/js/task/task.js"></script>
+    <script src="/js/task/taskDetail.js"></script>
 </div>
 </body>
 </html>

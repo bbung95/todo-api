@@ -1,11 +1,10 @@
-package com.bbung.todoapi.task.exception;
+package com.bbung.todoapi.user.exception;
 
 import com.bbung.todoapi.util.ExceptionMessageUtil;
 import org.springframework.validation.BindingResult;
 
-public class TaskValidationException extends RuntimeException {
-
-    public TaskValidationException(BindingResult result) {
+public class UserValidationException extends RuntimeException {
+    public UserValidationException(BindingResult result) {
         super(ExceptionMessageUtil.messageParse(result));
     }
 

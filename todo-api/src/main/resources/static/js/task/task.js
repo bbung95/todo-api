@@ -1,7 +1,8 @@
-const task_List = document.querySelector("#task_list");
-const title = document.querySelector("input[name='title']");
-const contents = document.querySelector("input[name='contents']");
-const importance = document.querySelector("select[name='importance']");
+const task_List = document.querySelector("#task_list");;
+const taskAddForm = document.querySelector('#taskAddForm');
+const title = taskAddForm.querySelector("input[name='title']");
+const contents = taskAddForm.querySelector("textarea[name='contents']");
+const importance = taskAddForm.querySelector("select[name='importance']");
 
 const getList = () => {
 
@@ -63,8 +64,7 @@ const appendTask = (id) => {
                         <div>${data.importance}</div>
                         <div>${data.status}</div>
                         <div>${data.createDate}</div>
-                    `
-
+                        `
             let htmlElement = document.createElement("div");
             htmlElement.className = "task_el"
             htmlElement.innerHTML = display;

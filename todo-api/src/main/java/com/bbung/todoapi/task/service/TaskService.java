@@ -16,13 +16,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskService {
 
+    private final int DEFAULT_ORDER = 1;
     private final TaskMapper taskMapper;
     private final ModelMapper modelMapper;
 
     public int saveTask(TaskFormDto taskForm){
 
         Task task = modelMapper.map(taskForm, Task.class);
-        Integer orders = taskMapper.findLastOrder().orElse(1);
+        Integer orders = taskMapper.findLastOrder().orElse(DEFAULT_ORDER);
         task.setOrders(orders);
         task.setStatus(TaskStatus.WAITING.name());
 
