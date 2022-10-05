@@ -1,4 +1,7 @@
 const task_List = document.querySelector("#task_list");
+const title = document.querySelector("input[name='title']");
+const contents = document.querySelector("input[name='contents']");
+const importance = document.querySelector("select[name='importance']");
 
 const getList = () => {
 
@@ -29,26 +32,25 @@ const appendList = (data) => {
     task_List.innerHTML = display;
 }
 
-const addTask = () => {
+const addTask = async () => {
 
-    const title = document.querySelector("input[name='title']").value;
-    const contents = document.querySelector("input[name='contents']").value;
-    const importance = document.querySelector("select[name='importance']").value;
-
-    fetch("/api/task",{
-        method : "POST",
+    let res = await fetch("/api/task", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body : JSON.stringify({
-            title,
-            contents,
-            importance
+        body: JSON.stringify({
+            "title" : title.value,
+            "contents" : contents.value,
+            "importance" : importance.value
         })
-    })
-    .then((response) => response.json())
-    .then((data) => appendTask(data))
-    .catch((error) => console.log(error))
+    });
+    const data = res.json()
+    if (res.ok) {
+        data.then((item => appendTask(item)))
+    } else {
+        data.then((item => errorMessage(item)))
+    }
 }
 
 const appendTask = (id) => {
@@ -69,6 +71,19 @@ const appendTask = (id) => {
 
             task_List.appendChild(htmlElement);
         })
+    title.value = "";
+    contents.value = "";
+}
+
+const errorMessage = (error) => {
+
+    let message = "";
+
+    error.forEach(msg => {
+        message += `${msg}\n`;
+    })
+
+    alert(message);
 }
 
 getList();

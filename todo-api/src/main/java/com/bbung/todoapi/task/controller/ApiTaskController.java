@@ -1,16 +1,12 @@
 package com.bbung.todoapi.task.controller;
 
-
-import com.bbung.todoapi.domain.Task;
 import com.bbung.todoapi.task.dto.*;
+import com.bbung.todoapi.task.exception.TaskValidationException;
 import com.bbung.todoapi.task.service.TaskService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,14 +20,11 @@ public class ApiTaskController {
     private final TaskService taskService;
 
     @PostMapping
-    public ResponseEntity saveTask(@RequestBody @Valid TaskFormDto taskForm, Errors result){
+    public ResponseEntity saveTask(@RequestBody @Valid TaskFormDto taskForm, BindingResult result){
 
-//        if(result.hasErrors()){
-//
-////            result.getAllErrors().stream().forEach(item ->
-////                    System.out.println(item));
-//
-//        }
+        if(result.hasErrors()){
+            throw new TaskValidationException(result);
+        }
 
         int id = taskService.saveTask(taskForm);
 
