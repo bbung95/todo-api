@@ -4,12 +4,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bbung.todoapi.config.security.UserInfo;
 import com.bbung.todoapi.domain.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class JwtUtil {
 
     @Value("${jwt.key}")
@@ -18,9 +22,11 @@ public class JwtUtil {
     @Value("${jwt.subject}")
     private String subject;
 
-    public String successAuthorizationToken(UserInfo user){
+    private ObjectMapper objectMapper;
 
-        String token = JWT.create()
+    public ObjectNode successAuthorizationToken(UserInfo user){
+
+        String token = "Bearer " + JWT.create()
                 .withClaim("uesrname", user.getUsername())
                 .withClaim("nickname", user.getNickname())
                 .withSubject(subject)
@@ -28,6 +34,8 @@ public class JwtUtil {
                 .sign(Algorithm.HMAC512(key))
                 ;
 
-        return "Bearer " + token;
+        ObjectNode tokenObject = objectMapper.createObjectNode().put("token", token);
+
+        return tokenObject;
     }
 }

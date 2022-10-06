@@ -75,8 +75,10 @@ const appendTask = (id) => {
     contents.value = "";
 }
 
+
 const errorMessage = (error) => {
 
+    console.log(error)
     let message = "";
 
     error.forEach(msg => {

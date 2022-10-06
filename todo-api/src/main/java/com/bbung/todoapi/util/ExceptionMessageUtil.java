@@ -1,13 +1,13 @@
 package com.bbung.todoapi.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.bbung.todoapi.common.CustomErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.List;
 
 public class ExceptionMessageUtil {
 
@@ -15,12 +15,23 @@ public class ExceptionMessageUtil {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Stream<String> stringStream = result.getFieldErrors().stream().map(item -> item.getDefaultMessage());
+        String message = "";
 
-        try {
-            return objectMapper.writeValueAsString(stringStream.collect(Collectors.toList()));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        for (FieldError fieldError : result.getFieldErrors()) {
+            message += fieldError.getDefaultMessage();
         }
+
+        return message;
+    }
+
+    public static CustomErrorMessage customErrorMessage(int statusCode, String messages){
+        return new CustomErrorMessage(statusCode, getMessageList(messages));
+    }
+
+    private static List<String> getMessageList(String messages){
+
+        String[] split = messages.split(",");
+
+        return Arrays.asList(split);
     }
 }

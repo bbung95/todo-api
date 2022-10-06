@@ -9,6 +9,8 @@ import com.bbung.todoapi.user.dto.UserUpdateFormDto;
 import com.bbung.todoapi.user.exception.UserValidationException;
 import com.bbung.todoapi.user.service.UserService;
 import com.bbung.todoapi.util.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -31,12 +33,6 @@ public class ApiUserController {
 
     private final JwtUtil jwtUtil;
 
-    @Setter
-    @Getter
-    public class Token{
-        private String token;
-    }
-
     @PostMapping("login")
     public ResponseEntity loginUser(@RequestBody @Valid UserLoginForm userLoginForm, BindingResult result){
 
@@ -45,18 +41,12 @@ public class ApiUserController {
         }
 
         UserInfo userInfo = userService.usernameAndPasswordCheck(userLoginForm);
-        String token = jwtUtil.successAuthorizationToken(userInfo);
+        Object token = jwtUtil.successAuthorizationToken(userInfo);
 
         SecurityContextHolder.getContext()
                 .setAuthentication(new UsernamePasswordAuthenticationToken(userInfo, null, userInfo.getAuthorities()));
 
-
-        System.out.println("token = " + token);
-
-        Token token1 = new Token();
-        token1.setToken(token);
-
-        return ResponseEntity.status(HttpStatus.OK).body(token1);
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @PostMapping

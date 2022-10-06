@@ -25,15 +25,13 @@ const sign = async () => {
 
 const errorMessage = (error) => {
 
+    console.log(error);
+
     let message = "";
 
-    if(Array.isArray(error)){
-        error.forEach(msg => {
-            message += `${msg}\n`;
-        })
-    }else{
-        message = error;
-    }
+    error.forEach(msg => {
+        message += `${msg}\n`;
+    })
 
     alert(message);
 }
