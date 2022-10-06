@@ -3,6 +3,13 @@ const username = signForm.querySelector("input[name='username']");
 const password = signForm.querySelector("input[name='password']");
 const nickname = signForm.querySelector("input[name='nickname']");
 
+document.addEventListener("DOMContentLoaded", function() {
+
+    if(localStorage.getItem("token")){
+        location.href = "/";
+    }
+})
+
 const sign = async () => {
 
     let res = await fetch("/api/user", {
@@ -29,7 +36,7 @@ const errorMessage = (error) => {
 
     let message = "";
 
-    error.forEach(msg => {
+    error.messages.forEach(msg => {
         message += `${msg}\n`;
     })
 

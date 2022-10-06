@@ -1,20 +1,24 @@
 package com.bbung.todoapi.task.controller;
 
+import com.bbung.todoapi.common.PageResponse;
 import com.bbung.todoapi.task.dto.*;
 import com.bbung.todoapi.task.exception.TaskValidationException;
 import com.bbung.todoapi.task.service.TaskService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/task")
+@Slf4j
 public class ApiTaskController {
 
     private final TaskService taskService;
@@ -42,9 +46,11 @@ public class ApiTaskController {
     @GetMapping
     public ResponseEntity findTaskList(TaskSearchParam param){
 
-        List<TaskListDto> taskList = taskService.findTaskList(param);
+        PageResponse result = taskService.findTaskList(param);
 
-        return ResponseEntity.ok().body(taskList);
+        log.info("TaskList = {}", result);
+
+        return ResponseEntity.ok().body(result);
     }
 
     @PutMapping("{id}")

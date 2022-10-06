@@ -1,5 +1,6 @@
 package com.bbung.todoapi.task.service;
 
+import com.bbung.todoapi.common.PageResponse;
 import com.bbung.todoapi.domain.Task;
 import com.bbung.todoapi.task.dto.*;
 import com.bbung.todoapi.task.enums.TaskStatus;
@@ -41,11 +42,15 @@ public class TaskService {
         return findTask.get();
     }
 
-    public List<TaskListDto> findTaskList(TaskSearchParam param) {
+    public PageResponse findTaskList(TaskSearchParam param) {
 
         List<TaskListDto> taskList = taskMapper.findTaskList(param);
+        int totalCount = taskMapper.findTaskTotalCount(param);
 
-        return taskList;
+        return PageResponse.<TaskListDto>builder()
+                .list(taskList)
+                .totalCount(totalCount)
+                .build();
     }
 
     public void updateTask(int id, TaskFormDto formDto) {

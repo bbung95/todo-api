@@ -18,7 +18,7 @@ public class TaskExceptionHandler{
 
     @ExceptionHandler(TaskValidationException.class)
     public ResponseEntity badRequestErrorHandler(RuntimeException e){
-1
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionMessageUtil.customErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
     }

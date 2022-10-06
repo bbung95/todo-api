@@ -41,6 +41,24 @@
         ORDER BY orders ASC
     </select>
 
+    <select id="findTaskTotalCount" resultType="int">
+        SELECT
+        COUNT(id)
+        FROM task
+        <where>
+            <if test="searchType != null and keyword != null">
+                <choose>
+                    <when test="searchType == 'title' ">
+                        title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="searchType == 'contents' ">
+                        contents LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
     <update id="updateTask">
         UPDATE
         task

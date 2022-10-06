@@ -4,21 +4,32 @@ const title = taskAddForm.querySelector("input[name='title']");
 const contents = taskAddForm.querySelector("textarea[name='contents']");
 const importance = taskAddForm.querySelector("select[name='importance']");
 
-const getList = () => {
+document.addEventListener("DOMContentLoaded", function() {
 
-    fetch("/api/task", {
-        method : "GET",
-        }
-    )
-    .then((response) => response.json())
-    .then((data) => appendList(data))
+    if(localStorage.getItem("token")){
+        getList();
+    }else{
+        alert("로그인이 필요합니다.")
+        location.href = "/login";
+    }
+})
+
+const getList = async () => {
+
+    const res = await fetch("/api/task", {
+        headers : {"Authorization" : localStorage.getItem("token")}
+    });
+    const result = res.json();
+    if(res.ok){
+        result.then((data) => appendList(data))
+    }
 }
 
 const appendList = (data) => {
 
     let display = "";
 
-    data.forEach(item => {
+    data.list.forEach(item => {
 
         display += `
                     <div class="task_el">
@@ -33,12 +44,23 @@ const appendList = (data) => {
     task_List.innerHTML = display;
 }
 
+const displayAddForm = () => {
+
+    if(taskAddForm.style.display == "none"){
+        taskAddForm.style.display = "block";
+    }else{
+        taskAddForm.style.display = "none";
+    }
+
+}
+
 const addTask = async () => {
 
     let res = await fetch("/api/task", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization" : localStorage.getItem("token")
         },
         body: JSON.stringify({
             "title" : title.value,
@@ -56,7 +78,9 @@ const addTask = async () => {
 
 const appendTask = (id) => {
 
-    fetch(`/api/task/${id}`)
+    fetch(`/api/task/${id}`, {
+        headers : {"Authorization" : localStorage.getItem("token")}
+    })
         .then((response) => response.json())
         .then((data) => {
             let display = `
@@ -81,11 +105,9 @@ const errorMessage = (error) => {
     console.log(error)
     let message = "";
 
-    error.forEach(msg => {
+    error.messages.forEach(msg => {
         message += `${msg}\n`;
     })
 
     alert(message);
 }
-
-getList();

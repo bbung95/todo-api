@@ -22,12 +22,12 @@ public class JwtUtil {
     @Value("${jwt.subject}")
     private String subject;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public ObjectNode successAuthorizationToken(UserInfo user){
 
         String token = "Bearer " + JWT.create()
-                .withClaim("uesrname", user.getUsername())
+                .withClaim("username", user.getUsername())
                 .withClaim("nickname", user.getNickname())
                 .withSubject(subject)
                 .withExpiresAt(new Date(System.currentTimeMillis()+(10 * 6 * 60000)))

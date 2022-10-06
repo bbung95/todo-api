@@ -29,4 +29,5 @@ public interface TaskMapper {
 
     Optional<Integer> findLastOrder();
 
+    int findTaskTotalCount(TaskSearchParam param);
 }

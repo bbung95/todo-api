@@ -30,7 +30,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UserService userService;
 
     private List<String> EXCLUDE_URL = Collections.unmodifiableList(
-            Arrays.asList("/api/user/login", "/api/user", "/login", "/sign"));
+            Arrays.asList("/api/user/login", "/api/user", "/login", "/sign", "/"));
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -47,6 +47,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
             username = JWT.require(Algorithm.HMAC512(key)).build().verify(jwtToken).getClaim("username").asString();
         }
+
+        log.info("URL = {}", request.getServletPath());
+        log.info("username = {}", username);
 
         if(username != null){
             UserInfo userInfo = userService.loadUserByUsername(username);

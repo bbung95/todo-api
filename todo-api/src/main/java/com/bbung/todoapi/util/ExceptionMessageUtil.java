@@ -13,12 +13,11 @@ public class ExceptionMessageUtil {
 
     public static String messageParse(BindingResult result){
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         String message = "";
 
         for (FieldError fieldError : result.getFieldErrors()) {
-            message += fieldError.getDefaultMessage();
+
+            message += fieldError.getDefaultMessage() + ",";
         }
 
         return message;
