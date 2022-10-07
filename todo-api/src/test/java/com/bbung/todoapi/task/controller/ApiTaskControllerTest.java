@@ -1,14 +1,11 @@
 package com.bbung.todoapi.task.controller;
 
-import com.bbung.todoapi.domain.Task;
 import com.bbung.todoapi.task.dto.TaskFormDto;
 import com.bbung.todoapi.task.dto.TaskSearchParam;
 import com.bbung.todoapi.task.dto.TaskUpdateFormDto;
 import com.bbung.todoapi.task.enums.TaskImportance;
 import com.bbung.todoapi.task.enums.TaskStatus;
 import com.bbung.todoapi.task.service.TaskService;
-import com.bbung.todoapi.user.dto.UserFormDto;
-import com.bbung.todoapi.user.dto.UserLoginForm;
 import com.bbung.todoapi.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.Map;
-import java.util.function.Supplier;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

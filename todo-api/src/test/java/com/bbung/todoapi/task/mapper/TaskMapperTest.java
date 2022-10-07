@@ -151,7 +151,7 @@ class TaskMapperTest {
 
         findTaskListTest();
 
-        int lastOrder = taskMapper.findLastOrder().orElse(1);
+        int lastOrder = taskMapper.findLastOrder(TaskImportance.LOW.name()).orElse(1);
 
         assertThat(lastOrder).isEqualTo(10);
 

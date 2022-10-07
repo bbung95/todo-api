@@ -1,29 +1,23 @@
 package com.bbung.todoapi.domain;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@Getter
 @ToString
-@Builder
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "board")
+public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private String contents;
-    private String status;
-    private Integer orders;
-    private String importance;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
-    private Integer boardId;
-
+    private Integer writer;
 }

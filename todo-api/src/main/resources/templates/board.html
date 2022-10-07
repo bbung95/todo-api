@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo-List</title>
+    <style>
+        #main{
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .task_el{
+            border: gray 1px solid;
+            background: cornsilk;
+            margin-bottom: 2px;
+        }
+
+        #header{
+            border-bottom: #d0d0b7 solid 1px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+<div id="main">
+    <div id="header">
+        <h1>Todo-List</h1>
+        <button onclick="logout();" style="height: 40px;">로그아웃</button>
+    </div>
+
+    <button onclick="location.href='/'">뒤로</button>
+
+    <div id="task_search_form">
+        <select name="searchType" id="searchType">
+            <option value="title">제목</option>
+            <option value="contents">내용</option>
+        </select>
+        <input type="text" name="keyword"/>
+        <input id="condition_all" type="radio" name="condition" value="all" checked/><label for="condition_all">전체</label>
+        <input id="condition_active" type="radio" name="condition" value="ACTIVATE"/><label for="condition_active">작업중</label>
+        <input id="condition_complete" type="radio" name="condition" value="COMPLETION"/><label for="condition_complete">완료</label>
+        <button onclick="onClickSearchTask();">검색</button>
+    </div>
+
+    <div id="task_list">
+
+        <h4>High <span id="HIGH_count"></span></h4>
+        <div id="task_HIGH"></div>
+        <h4>Medium <span id="MEDIUM_count"></span></h4>
+        <div id="task_MEDIUM"></div>
+        <h4>Low <span id="LOW_count"></span></h4>
+        <div id="task_LOW"></div>
+    </div>
+
+    <button onclick="displayAddForm()"> + </button>
+
+    <div id="taskAddForm" style="display: none">
+        <div>
+            제목 : <input name="title" type="text"/>
+        </div>
+        <div>
+            내용 : <textarea name="contents"></textarea>
+        </div>
+        <div>
+            중요도 : <select name="importance">
+                <option value="HIGH">High</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="LOW">Low</option>
+            </select>
+            <button onclick="addTask()">등록</button>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        const boardId = [[${id}]];
+
+        const logout = () => {
+
+            localStorage.removeItem("token");
+            location.href = "/login";
+        }
+    </script>
+    <script src="/js/task.js"></script>
+</div>
+</body>
+</html>

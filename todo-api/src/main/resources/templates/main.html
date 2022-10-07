@@ -9,13 +9,21 @@
             margin: 0 auto;
         }
 
-        .task_el{
+        .board_el{
             border: gray 1px solid;
             background: cornsilk;
+            margin-bottom: 2px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
-        h1{
+        #header{
             border-bottom: #d0d0b7 solid 1px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
         }
 
     </style>
@@ -23,31 +31,36 @@
 <body>
 <div id="main">
 
-    <h1>Todo-List</h1>
+    <div id="header">
+        <h1>Todo-List</h1>
+        <button onclick="logout();" style="height: 40px;">로그아웃</button>
+    </div>
+
     <h3>목록</h3>
 
-    <div id="task_list"></div>
+    <div id="board_list">
+    </div>
 
-    <button onclick="displayAddForm(event)"> + </button>
+    <button onclick="displayBoardAddForm()"> + </button>
 
-    <div id="taskAddForm" style="display: none">
+    <div id="boardAddForm" style="display: none">
         <div>
             제목 : <input name="title" type="text"/>
         </div>
         <div>
-            내용 : <textarea name="contents"></textarea>
-        </div>
-        <div>
-            중요도 : <select name="importance">
-                <option value="HIGH">High</option>
-                <option value="MEDIUM">Medium</option>
-                <option value="LOW">Low</option>
-            </select>
-            <button onclick="addTask()">등록</button>
+            <button onclick="addBoard()">등록</button>
         </div>
     </div>
 
-    <script src="/js/task/task.js"></script>
+    <script src="/js/board.js"></script>
+    <script>
+
+        const logout = () => {
+
+            localStorage.removeItem("token");
+            location.href = "/login";
+        }
+    </script>
 </div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.bbung.todoapi.task.service;
 import com.bbung.todoapi.common.PageResponse;
 import com.bbung.todoapi.domain.Task;
 import com.bbung.todoapi.task.dto.*;
+import com.bbung.todoapi.task.enums.TaskImportance;
 import com.bbung.todoapi.task.enums.TaskStatus;
 import com.bbung.todoapi.task.exception.TaskNotFoundException;
 import com.bbung.todoapi.task.mapper.TaskMapper;
@@ -10,8 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +24,9 @@ public class TaskService {
     public int saveTask(TaskFormDto taskForm){
 
         Task task = modelMapper.map(taskForm, Task.class);
-        Integer orders = taskMapper.findLastOrder().orElse(DEFAULT_ORDER);
+        Integer orders = taskMapper.findLastOrder(taskForm.getImportance()).orElse(DEFAULT_ORDER);
         task.setOrders(orders);
-        task.setStatus(TaskStatus.WAITING.name());
+        task.setStatus(TaskStatus.ACTIVATE.name());
 
         taskMapper.insertTask(task);
 
@@ -42,22 +42,30 @@ public class TaskService {
         return findTask.get();
     }
 
-    public PageResponse findTaskList(TaskSearchParam param) {
+    public Map findTaskList(TaskSearchParam param) {
 
-        List<TaskListDto> taskList = taskMapper.findTaskList(param);
-        int totalCount = taskMapper.findTaskTotalCount(param);
+        Map map = new HashMap<String, PageResponse<TaskListDto>>();
 
-        return PageResponse.<TaskListDto>builder()
-                .list(taskList)
-                .totalCount(totalCount)
-                .build();
+        Arrays.stream(TaskImportance.values()).forEach(importance -> {
+            param.setImportance(importance.name());
+            List<TaskListDto> taskList = taskMapper.findTaskList(param);
+            int totalCount = taskMapper.findTaskTotalCount(param);
+
+            PageResponse<TaskListDto> pageResponse = PageResponse.<TaskListDto>builder()
+                    .list(taskList)
+                    .totalCount(totalCount)
+                    .build();
+
+            map.put(importance.name(), pageResponse);
+        });
+
+        return map;
     }
 
     public void updateTask(int id, TaskFormDto formDto) {
 
         Task task = modelMapper.map(formDto, Task.class);
         task.setId(id);
-
         taskMapper.updateTask(task);
     }
 

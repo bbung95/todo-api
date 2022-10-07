@@ -7,11 +7,11 @@
         INSERT
         INTO task
         (
-            title, contents, status, orders, importance, create_date
+            title, contents, status, orders, importance, create_date, board_id
         )
         VALUES
         (
-            #{title}, #{contents}, #{status}, #{orders}, #{importance}, NOW()
+            #{title}, #{contents}, #{status}, #{orders}, #{importance}, NOW(), #{boardId}
         )
     </insert>
 
@@ -24,20 +24,23 @@
 
     <select id="findTaskList" resultType="TaskListDto">
         SELECT
-            *
+        *
         FROM task
-        <where>
-            <if test="searchType != null and keyword != null">
-                <choose>
-                    <when test="searchType == 'title' ">
-                        title LIKE CONCAT('%', #{keyword}, '%')
-                    </when>
-                    <when test="searchType == 'contents' ">
-                        contents LIKE CONCAT('%', #{keyword}, '%')
-                    </when>
-                </choose>
-            </if>
-        </where>
+        WHERE importance = #{importance}
+            AND board_id = #{boardId}
+        <if test="searchType != null and keyword != null">
+            <choose>
+                <when test="searchType == 'title' ">
+                    AND title LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'contents' ">
+                    AND contents LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+        <if test="condition != 'all'">
+            AND status = #{condition}
+        </if>
         ORDER BY orders ASC
     </select>
 
@@ -45,18 +48,18 @@
         SELECT
         COUNT(id)
         FROM task
-        <where>
-            <if test="searchType != null and keyword != null">
-                <choose>
-                    <when test="searchType == 'title' ">
-                        title LIKE CONCAT('%', #{keyword}, '%')
-                    </when>
-                    <when test="searchType == 'contents' ">
-                        contents LIKE CONCAT('%', #{keyword}, '%')
-                    </when>
-                </choose>
-            </if>
-        </where>
+        WHERE importance = #{importance}
+            AND board_id = #{boardId}
+        <if test="searchType != null and keyword != null">
+            <choose>
+                <when test="searchType == 'title' ">
+                    AND title LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'contents' ">
+                    AND contents LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
     </select>
 
     <update id="updateTask">
@@ -92,10 +95,17 @@
         WHERE id = #{id}
     </delete>
 
+    <delete id="deleteTaskByBoardId">
+        DELETE
+        FROM task
+        WHERE board_id = #{boardId}
+    </delete>
+
     <select id="findLastOrder" resultType="int">
         SELECT
         orders
         FROM task
+        WHERE importance = #{importance}
         ORDER BY orders DESC
         LIMIT 1
     </select>

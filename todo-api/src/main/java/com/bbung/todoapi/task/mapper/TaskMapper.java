@@ -23,11 +23,13 @@ public interface TaskMapper {
 
     int deleteTask(int id);
 
+    int deleteTaskByBoardId(int boardId);
+
     int updateTaskStatus(@Param("id") int id, @Param("status") String status);
 
     int updateTaskImportance(@Param("id") int id, @Param("importance") String importance);
 
-    Optional<Integer> findLastOrder();
+    Optional<Integer> findLastOrder(String importance);
 
     int findTaskTotalCount(TaskSearchParam param);
 }

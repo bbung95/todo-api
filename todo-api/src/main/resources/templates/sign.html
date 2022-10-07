@@ -14,8 +14,11 @@
             background: cornsilk;
         }
 
-        h1{
+        #header{
             border-bottom: #d0d0b7 solid 1px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
     </style>
@@ -23,7 +26,10 @@
 <body>
 <div id="main">
 
-    <h1>Todo-List</h1>
+    <div id="header">
+        <h1>Todo-List</h1>
+    </div>
+
     <h3>Sign</h3>
 
     <div id="signForm">
@@ -38,6 +44,7 @@
         </div>
         <div>
             <button onclick="sign()">가입</button>
+            <button onclick="location.href='/login'">취소</button>
         </div>
     </div>
 

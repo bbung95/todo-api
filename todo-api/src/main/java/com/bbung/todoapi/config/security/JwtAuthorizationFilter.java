@@ -30,7 +30,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UserService userService;
 
     private List<String> EXCLUDE_URL = Collections.unmodifiableList(
-            Arrays.asList("/api/user/login", "/api/user", "/login", "/sign", "/"));
+            Arrays.asList("/api/user/login", "/api/user", "/login", "/sign", "/", "/h2-console", "/board"));
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,11 +47,7 @@ public class ApiTaskController {
     @GetMapping
     public ResponseEntity findTaskList(TaskSearchParam param){
 
-        PageResponse result = taskService.findTaskList(param);
-
-        log.info("TaskList = {}", result);
-
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(taskService.findTaskList(param));
     }
 
     @PutMapping("{id}")

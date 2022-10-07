@@ -15,6 +15,7 @@ public class TaskListDto {
 
     private Integer id;
     private String title;
+    private String contents;
     private String status;
     private String importance;
     private LocalDateTime createDate;

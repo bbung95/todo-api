@@ -17,6 +17,8 @@ public class TaskFormDto {
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
     private String contents;
-    @NotNull
+    @NotBlank
     private String importance;
+    @NotBlank
+    private Integer boardId;
 }

@@ -16,10 +16,8 @@ public class ExceptionMessageUtil {
         String message = "";
 
         for (FieldError fieldError : result.getFieldErrors()) {
-
             message += fieldError.getDefaultMessage() + ",";
         }
-
         return message;
     }
 
@@ -28,9 +26,7 @@ public class ExceptionMessageUtil {
     }
 
     private static List<String> getMessageList(String messages){
-
         String[] split = messages.split(",");
-
         return Arrays.asList(split);
     }
 }

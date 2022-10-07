@@ -9,4 +9,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public class TaskSearchParam extends SearchParam {
+
+    private String importance;
+    private Integer boardId;
+    private String condition;
 }
