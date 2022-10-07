@@ -55,7 +55,7 @@ public class BoardService {
 
     public int updateBoard(Integer id, BoardUpdateForm boardUpdateForm){
 
-        int result = boardMapper.updateTitle(id, boardUpdateForm.getTitle());
+        int result = boardMapper.updateTitle(id, boardUpdateForm.getValue());
 
         return result;
     }

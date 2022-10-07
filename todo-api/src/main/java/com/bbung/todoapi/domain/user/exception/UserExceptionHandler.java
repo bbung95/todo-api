@@ -11,18 +11,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class UserExceptionHandler {
 
-    @ExceptionHandler({DuplicationUsername.class, UserValidationException.class, BadCredentialsException.class})
+    @ExceptionHandler({
+            DuplicationUsername.class,
+            UserValidationException.class,
+            BadCredentialsException.class,
+            UsernameNotFoundException.class,
+            UserUpdateTypeNotFoundException.class
+    })
     public ResponseEntity badRequestExceptionHandler(RuntimeException e){
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionMessageUtil.customErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
     }
-
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity notFoundExceptionHandler(RuntimeException e){
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ExceptionMessageUtil.customErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage()));
-    }
-
 }

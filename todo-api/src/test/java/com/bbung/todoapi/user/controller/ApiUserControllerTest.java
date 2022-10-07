@@ -3,6 +3,7 @@ package com.bbung.todoapi.user.controller;
 import com.bbung.todoapi.domain.user.dto.UserFormDto;
 import com.bbung.todoapi.domain.user.dto.UserLoginForm;
 import com.bbung.todoapi.domain.user.dto.UserUpdateFormDto;
+import com.bbung.todoapi.domain.user.enums.UserUpdateType;
 import com.bbung.todoapi.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -89,7 +90,7 @@ class ApiUserControllerTest {
 
         mockMvc.perform(get("/api/user/{id}", 20))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -126,7 +127,7 @@ class ApiUserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginForm)))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -141,7 +142,7 @@ class ApiUserControllerTest {
         int id = userService.saveUser(userFormDto);
 
         UserUpdateFormDto userUpdateFormDto = new UserUpdateFormDto();
-        userUpdateFormDto.setType("password");
+        userUpdateFormDto.setType(UserUpdateType.PASSWORD.getValue());
         userUpdateFormDto.setValue("12345");
 
         mockMvc.perform(patch("/api/user/{id}", id)

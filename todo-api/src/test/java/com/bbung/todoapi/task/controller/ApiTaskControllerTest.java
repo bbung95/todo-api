@@ -5,6 +5,7 @@ import com.bbung.todoapi.domain.task.dto.TaskSearchParam;
 import com.bbung.todoapi.domain.task.dto.TaskUpdateFormDto;
 import com.bbung.todoapi.domain.task.enums.TaskImportance;
 import com.bbung.todoapi.domain.task.enums.TaskStatus;
+import com.bbung.todoapi.domain.task.enums.TaskUpdateType;
 import com.bbung.todoapi.domain.task.service.TaskService;
 import com.bbung.todoapi.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,7 +73,7 @@ class ApiTaskControllerTest {
 
         mockMvc.perform(get("/api/task/{id}", 100))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -119,7 +120,7 @@ class ApiTaskControllerTest {
         int id = taskService.saveTask(taskFormDto);
 
         TaskUpdateFormDto data = TaskUpdateFormDto.builder()
-                .target("status")
+                .type(TaskUpdateType.STATUS.name())
                 .value(TaskStatus.COMPLETION.name())
                 .build();
 
@@ -135,7 +136,7 @@ class ApiTaskControllerTest {
     public void updateStatus_NotFoundMockTest() throws Exception {
 
         TaskUpdateFormDto data = TaskUpdateFormDto.builder()
-                .target("status")
+                .type(TaskUpdateType.STATUS.name())
                 .value(TaskStatus.COMPLETION.name())
                 .build();
 
@@ -143,7 +144,7 @@ class ApiTaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(data)))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -154,7 +155,7 @@ class ApiTaskControllerTest {
         int id = taskService.saveTask(taskFormDto);
 
         TaskUpdateFormDto data = TaskUpdateFormDto.builder()
-                .target("importance")
+                .type(TaskUpdateType.IMPORTANCE.name())
                 .value(TaskImportance.LOW.name())
                 .build();
 
@@ -170,7 +171,7 @@ class ApiTaskControllerTest {
     public void updateImportance_NotFoundMockTest() throws Exception {
 
         TaskUpdateFormDto data = TaskUpdateFormDto.builder()
-                .target("importance")
+                .type(TaskUpdateType.IMPORTANCE.name())
                 .value(TaskStatus.COMPLETION.name())
                 .build();
 
@@ -178,7 +179,7 @@ class ApiTaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(data)))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -201,7 +202,7 @@ class ApiTaskControllerTest {
 
         mockMvc.perform(delete("/api/task/{id}", 10))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     private TaskFormDto getTaskFormDto() {

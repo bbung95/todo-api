@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class TaskExceptionHandler{
 
-    @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity notFoundErrorHandler(RuntimeException e){
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ExceptionMessageUtil.customErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage()));
-    }
-
-    @ExceptionHandler({TaskValidationException.class, TaskSearchTypeNotFoundException.class})
+    @ExceptionHandler({
+            TaskValidationException.class,
+            TaskTypeNotFoundException.class,
+            TaskNotFoundException.class,
+            TaskValueNotFoundException.class
+    })
     public ResponseEntity badRequestErrorHandler(RuntimeException e){
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

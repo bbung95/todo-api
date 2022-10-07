@@ -4,6 +4,8 @@ import com.bbung.todoapi.config.security.UserInfo;
 import com.bbung.todoapi.Entity.User;
 import com.bbung.todoapi.domain.user.dto.UserUpdateFormDto;
 import com.bbung.todoapi.domain.user.enums.UserRole;
+import com.bbung.todoapi.domain.user.enums.UserUpdateType;
+import com.bbung.todoapi.domain.user.exception.UserUpdateTypeNotFoundException;
 import com.bbung.todoapi.domain.user.mapper.UserMapper;
 import com.bbung.todoapi.domain.user.dto.UserDto;
 import com.bbung.todoapi.domain.user.dto.UserFormDto;
@@ -17,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -79,6 +83,8 @@ public class UserService implements UserDetailsService {
 
     public int updateUser(Integer id, UserUpdateFormDto userUpdateFormDto){
 
+        userUpdateTypeCheck(userUpdateFormDto.getType());
+
         int result = 0;
 
         if(userUpdateFormDto.getType().equals("password")){
@@ -90,4 +96,15 @@ public class UserService implements UserDetailsService {
 
         return result;
     }
+
+    private void userUpdateTypeCheck(String type) {
+
+        boolean typeCheck = Arrays.stream(UserUpdateType.values()).filter(item -> item.getValue().equals(type))
+                .findAny().isPresent();
+
+        if(!typeCheck){
+            throw new UserUpdateTypeNotFoundException(type);
+        }
+    }
+
 }

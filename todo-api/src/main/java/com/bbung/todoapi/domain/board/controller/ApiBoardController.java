@@ -1,7 +1,6 @@
 package com.bbung.todoapi.domain.board.controller;
 
 import com.bbung.todoapi.domain.board.dto.*;
-import com.bbung.todoapi.domain.board.dto.*;
 import com.bbung.todoapi.domain.board.exception.BoardValidationException;
 import com.bbung.todoapi.domain.board.service.BoardService;
 import com.bbung.todoapi.common.PageResponse;
@@ -49,11 +48,15 @@ public class ApiBoardController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity updateBoardTitle(@PathVariable Integer id, @RequestBody BoardUpdateForm boardUpdateForm){
+    public ResponseEntity updateBoard(@PathVariable Integer id, @RequestBody @Valid BoardUpdateForm boardUpdateForm, BindingResult result){
 
-        int result = boardService.updateBoard(id, boardUpdateForm);
+        if(result.hasErrors()){
+            throw new BoardValidationException(result);
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body(1);
+        boardService.updateBoard(id, boardUpdateForm);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("{id}")

@@ -5,7 +5,6 @@ import com.bbung.todoapi.domain.task.dto.TaskFormDto;
 import com.bbung.todoapi.domain.task.dto.TaskSearchParam;
 import com.bbung.todoapi.domain.task.dto.TaskUpdateFormDto;
 import com.bbung.todoapi.domain.task.service.TaskService;
-import com.bbung.todoapi.domain.task.dto.*;
 import com.bbung.todoapi.domain.task.exception.TaskValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +58,11 @@ public class ApiTaskController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity updateStatus(@PathVariable int id, @RequestBody TaskUpdateFormDto taskData){
+    public ResponseEntity updateStatus(@PathVariable int id, @RequestBody @Valid TaskUpdateFormDto taskData, BindingResult result){
+
+        if(result.hasErrors()){
+            throw new TaskValidationException(result);
+        }
 
         taskService.updateTaskStatusOrImportance(id, taskData);
 

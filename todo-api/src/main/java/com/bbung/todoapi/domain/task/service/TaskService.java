@@ -5,11 +5,12 @@ import com.bbung.todoapi.common.PageResponse;
 import com.bbung.todoapi.Entity.Task;
 import com.bbung.todoapi.domain.task.dto.*;
 import com.bbung.todoapi.domain.task.enums.TaskSearchType;
+import com.bbung.todoapi.domain.task.enums.TaskUpdateType;
 import com.bbung.todoapi.domain.task.exception.TaskNotFoundException;
-import com.bbung.todoapi.domain.task.dto.*;
 import com.bbung.todoapi.domain.task.enums.TaskImportance;
 import com.bbung.todoapi.domain.task.enums.TaskStatus;
-import com.bbung.todoapi.domain.task.exception.TaskSearchTypeNotFoundException;
+import com.bbung.todoapi.domain.task.exception.TaskTypeNotFoundException;
+import com.bbung.todoapi.domain.task.exception.TaskValueNotFoundException;
 import com.bbung.todoapi.domain.task.mapper.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -81,12 +82,23 @@ public class TaskService {
     public void updateTaskStatusOrImportance(int id, TaskUpdateFormDto taskData) {
 
         findTask(id);
+        taskUpdateTypeCheck(taskData.getType());
 
-        if(taskData.getTarget().equals("status")){
-            taskMapper.updateTaskStatus(id, taskData.getValue());
-        }else if(taskData.getTarget().equals("importance")){
-            taskMapper.updateTaskImportance(id, taskData.getValue());
+        if(taskData.getType().equals(TaskUpdateType.STATUS.getValue())){
+            updateStatus(id, taskData);
+        }else if(taskData.getType().equals(TaskUpdateType.IMPORTANCE.getValue())){
+            updateImportance(id, taskData);
         }
+    }
+
+    private void updateStatus(int id, TaskUpdateFormDto taskData) {
+        taskStatusCheck(taskData.getValue());
+        taskMapper.updateTaskStatus(id, taskData.getValue());
+    }
+
+    private void updateImportance(int id, TaskUpdateFormDto taskData){
+        taskImportanceCheck(taskData.getValue());
+        taskMapper.updateTaskImportance(id, taskData.getValue());
     }
 
     public void deleteTask(int id) {
@@ -98,13 +110,43 @@ public class TaskService {
         boardService.findBoard(boardId);
     }
 
+    private void taskUpdateTypeCheck(String type){
+        boolean typeCheck = Arrays.stream(TaskUpdateType.values())
+                .filter(item -> item.getValue().equals(type))
+                .findAny().isPresent();
+
+        if(!typeCheck){
+            throw new TaskTypeNotFoundException(type);
+        }
+    }
+
+    private void taskStatusCheck(String value){
+        boolean typeCheck = Arrays.stream(TaskStatus.values())
+                .filter(item -> item.name().equals(value))
+                .findAny().isPresent();
+
+        if(!typeCheck){
+            throw new TaskValueNotFoundException(value);
+        }
+    }
+
+    private void taskImportanceCheck(String value){
+        boolean typeCheck = Arrays.stream(TaskImportance.values())
+                .filter(item -> item.name().equals(value))
+                .findAny().isPresent();
+
+        if(!typeCheck){
+            throw new TaskValueNotFoundException(value);
+        }
+    }
+
     private void taskSearchTypeCheck(String searchType){
         boolean typeCheck = Arrays.stream(TaskSearchType.values())
                 .filter(item -> item.getValue().equals(searchType))
                 .findAny().isPresent();
 
         if(!typeCheck){
-            throw new TaskSearchTypeNotFoundException("올바른 검색조건이 아닙니다.");
+            throw new TaskTypeNotFoundException(searchType);
         }
     }
 }
