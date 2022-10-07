@@ -1,11 +1,10 @@
 package com.bbung.todoapi;
 
-import com.bbung.todoapi.user.dto.UserFormDto;
-import com.bbung.todoapi.user.service.UserService;
+import com.bbung.todoapi.domain.user.dto.UserFormDto;
+import com.bbung.todoapi.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component

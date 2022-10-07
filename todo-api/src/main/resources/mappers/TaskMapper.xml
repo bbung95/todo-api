@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bbung.todoapi.task.mapper.TaskMapper">
+<mapper namespace="com.bbung.todoapi.domain.task.mapper.TaskMapper">
 
     <insert id="insertTask" useGeneratedKeys="true" keyProperty="id">
         INSERT
@@ -59,6 +59,9 @@
                     AND contents LIKE CONCAT('%', #{keyword}, '%')
                 </when>
             </choose>
+        </if>
+        <if test="condition != 'all'">
+            AND status = #{condition}
         </if>
     </select>
 

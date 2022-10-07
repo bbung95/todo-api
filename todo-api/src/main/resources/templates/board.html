@@ -13,6 +13,9 @@
             border: gray 1px solid;
             background: cornsilk;
             margin-bottom: 2px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         #header{
@@ -48,12 +51,18 @@
 
     <div id="task_list">
 
-        <h4>High <span id="HIGH_count"></span></h4>
-        <div id="task_HIGH"></div>
-        <h4>Medium <span id="MEDIUM_count"></span></h4>
-        <div id="task_MEDIUM"></div>
-        <h4>Low <span id="LOW_count"></span></h4>
-        <div id="task_LOW"></div>
+        <div>
+            <h4>High <span id="HIGH_count"></span></h4>
+            <div id="task_HIGH"></div>
+        </div>
+        <div>
+            <h4>Medium <span id="MEDIUM_count"></span></h4>
+            <div id="task_MEDIUM"></div>
+        </div>
+        <div>
+            <h4>Low <span id="LOW_count"></span></h4>
+            <div id="task_LOW"></div>
+        </div>
     </div>
 
     <button onclick="displayAddForm()"> + </button>

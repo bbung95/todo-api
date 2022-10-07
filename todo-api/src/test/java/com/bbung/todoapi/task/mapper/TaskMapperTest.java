@@ -1,11 +1,12 @@
 package com.bbung.todoapi.task.mapper;
 
-import com.bbung.todoapi.domain.Task;
-import com.bbung.todoapi.task.dto.TaskDto;
-import com.bbung.todoapi.task.dto.TaskListDto;
-import com.bbung.todoapi.task.dto.TaskSearchParam;
-import com.bbung.todoapi.task.enums.TaskImportance;
-import com.bbung.todoapi.task.enums.TaskStatus;
+import com.bbung.todoapi.Entity.Task;
+import com.bbung.todoapi.domain.task.dto.TaskDto;
+import com.bbung.todoapi.domain.task.dto.TaskListDto;
+import com.bbung.todoapi.domain.task.dto.TaskSearchParam;
+import com.bbung.todoapi.domain.task.enums.TaskImportance;
+import com.bbung.todoapi.domain.task.enums.TaskStatus;
+import com.bbung.todoapi.domain.task.mapper.TaskMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,12 @@
 package com.bbung.todoapi.task.controller;
 
-import com.bbung.todoapi.task.dto.TaskFormDto;
-import com.bbung.todoapi.task.dto.TaskSearchParam;
-import com.bbung.todoapi.task.dto.TaskUpdateFormDto;
-import com.bbung.todoapi.task.enums.TaskImportance;
-import com.bbung.todoapi.task.enums.TaskStatus;
-import com.bbung.todoapi.task.service.TaskService;
-import com.bbung.todoapi.user.service.UserService;
+import com.bbung.todoapi.domain.task.dto.TaskFormDto;
+import com.bbung.todoapi.domain.task.dto.TaskSearchParam;
+import com.bbung.todoapi.domain.task.dto.TaskUpdateFormDto;
+import com.bbung.todoapi.domain.task.enums.TaskImportance;
+import com.bbung.todoapi.domain.task.enums.TaskStatus;
+import com.bbung.todoapi.domain.task.service.TaskService;
+import com.bbung.todoapi.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

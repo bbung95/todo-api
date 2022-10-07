@@ -30,8 +30,6 @@ const getTaskList = async (queryData) => {
 
 const appendList = (data) => {
 
-    console.log(data);
-
     appendListEl(data.HIGH, "HIGH")
     appendListEl(data.MEDIUM, "MEDIUM")
     appendListEl(data.LOW, "LOW")
@@ -45,11 +43,17 @@ const appendListEl = (data, importance) => {
 
         display += `
                     <div class="task_el">
-                        <div>제목 : ${item.title}</div>
-                        <div>중요도 : ${item.importance}</div>
-                        <div>상태 : ${item.status}</div>
-                        <div>내용 : ${item.contents}</div>
-                        <div>생성날짜 : ${item.createDate}</div>
+                        <div>
+                            <div>제목 : ${item.title}</div>
+                            <div>중요도 : ${item.importance}</div>
+                            <div>상태 : ${item.status}</div>
+                            <div>내용 : ${item.contents}</div>
+                            <div>생성날짜 : ${item.createDate}</div>
+                        </div>
+                        <span>
+                            <button>수정</button>
+                            <button onclick="onClickTaskDelete(event)" data-id="${item.id}">삭제</button>
+                        </span>
                     </div>
                     `
     })
@@ -98,11 +102,17 @@ const appendTaskEl = (id) => {
     .then((response) => response.json())
     .then((data) => {
         let display = `
-                    <div>제목 : ${data.title}</div>
-                    <div>중요도 : ${data.importance}</div>
-                    <div>상태 : ${data.status}</div>
-                    <div>내용 : ${data.contents}</div>
-                    <div>생성날짜 : ${data.createDate}</div>
+                    <div>
+                        <div>제목 : ${data.title}</div>
+                        <div>중요도 : ${data.importance}</div>
+                        <div>상태 : ${data.status}</div>
+                        <div>내용 : ${data.contents}</div>
+                        <div>생성날짜 : ${data.createDate}</div>
+                    </div>
+                    <span>
+                        <button>수정</button>
+                        <button onclick="onClickTaskDelete(event)" data-id="${data.id}">삭제</button>
+                    </span>
                     `
         let htmlElement = document.createElement("div");
         htmlElement.className = "task_el"
@@ -114,6 +124,22 @@ const appendTaskEl = (id) => {
     })
     title.value = "";
     contents.value = "";
+}
+
+const onClickTaskDelete = (e) => {
+
+    const taskId = e.target.dataset.id;
+
+    fetch(`/api/task/${taskId}`, {
+        method : "DELETE",
+        headers : {
+            "Authorization" : localStorage.getItem("token")
+        }
+    }).then(() => {
+        const countEl = e.target.parentElement.parentElement.parentElement.parentElement.querySelector('h4 > span')
+        countEl.textContent = Number(countEl.textContent) - 1
+        e.target.parentElement.parentElement.remove();
+    })
 }
 
 const errorMessage = (error) => {

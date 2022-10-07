@@ -5,7 +5,6 @@ const title = boardAddForm.querySelector("input[name='title']");
 document.addEventListener("DOMContentLoaded", function() {
 
     if(localStorage.getItem("token")){
-
         getBoardList();
     }else{
         alert("로그인이 필요합니다.")
@@ -109,17 +108,13 @@ const onClickBoardDelete = (e) => {
 
     const boardId = e.target.dataset.id;
 
-    const res = fetch(`/api/board/${boardId}`, {
+    fetch(`/api/board/${boardId}`, {
         method : "DELETE",
+        headers : {"Authorization" : localStorage.getItem("token")}
+    }).then(() => {
+        e.target.parentElement.parentElement.remove();
     });
-    if(res.ok){
-        alert("삭제되었습니다.");
-    }else{
-        const result = res.json();
-        result.then(data => {
-            errorMessage(data);
-        })
-    }
+
 }
 
 const errorMessage = (error) => {

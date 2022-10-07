@@ -1,11 +1,8 @@
 package com.bbung.todoapi.user.mapper;
 
-import com.bbung.todoapi.domain.User;
-import com.bbung.todoapi.user.dto.UserDto;
-import com.bbung.todoapi.user.dto.UserUpdateFormDto;
-import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import com.bbung.todoapi.Entity.User;
+import com.bbung.todoapi.domain.user.dto.UserDto;
+import com.bbung.todoapi.domain.user.mapper.UserMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Sql("/truncate.sql")

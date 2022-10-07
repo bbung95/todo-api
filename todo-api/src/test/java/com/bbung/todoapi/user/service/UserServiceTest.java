@@ -1,14 +1,13 @@
 package com.bbung.todoapi.user.service;
 
 import com.bbung.todoapi.config.security.UserInfo;
-import com.bbung.todoapi.user.dto.UserFormDto;
-import com.bbung.todoapi.user.exception.DuplicationUsername;
-import org.assertj.core.api.Assertions;
+import com.bbung.todoapi.domain.user.dto.UserFormDto;
+import com.bbung.todoapi.domain.user.exception.DuplicationUsername;
+import com.bbung.todoapi.domain.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.jdbc.Sql;
 

@@ -9,10 +9,6 @@ spring:
     password:
     generate-unique-name : false
 
-    jpa:
-      hibernate:
-        ddl-auto: create
-
 mybatis:
   mapper-locations: /mappers/*.xml
   type-aliases-package: com.bbung.todoapi

@@ -3,7 +3,6 @@ package com.bbung.todoapi.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bbung.todoapi.config.security.UserInfo;
-import com.bbung.todoapi.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;

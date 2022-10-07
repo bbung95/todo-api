@@ -1,10 +1,9 @@
 package com.bbung.todoapi.user.controller;
 
-import com.bbung.todoapi.user.dto.UserFormDto;
-import com.bbung.todoapi.user.dto.UserLoginForm;
-import com.bbung.todoapi.user.dto.UserUpdateFormDto;
-import com.bbung.todoapi.user.mapper.UserMapper;
-import com.bbung.todoapi.user.service.UserService;
+import com.bbung.todoapi.domain.user.dto.UserFormDto;
+import com.bbung.todoapi.domain.user.dto.UserLoginForm;
+import com.bbung.todoapi.domain.user.dto.UserUpdateFormDto;
+import com.bbung.todoapi.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
