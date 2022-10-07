@@ -46,7 +46,7 @@ const appendListEl = (data, importance) => {
                         <div>
                             <div>제목 : ${item.title}</div>
                             <div>중요도 : ${item.importance}</div>
-                            <div>상태 : ${item.status}</div>
+                            <div>상태 : <span onclick="onClickTaskUpdate(event);" data-id="${item.id}" data-type="status" data-status="${item.status}">${item.statusValue}</span></div>
                             <div>내용 : ${item.contents}</div>
                             <div>생성날짜 : ${item.createDate}</div>
                         </div>
@@ -105,7 +105,7 @@ const appendTaskEl = (id) => {
                     <div>
                         <div>제목 : ${data.title}</div>
                         <div>중요도 : ${data.importance}</div>
-                        <div>상태 : ${data.status}</div>
+                        <div>상태 : <span onClick="onClickTaskUpdate(event);" data-id="${data.id}" data-type="status" data-status="${data.status}">${data.statusValue}</span></div>
                         <div>내용 : ${data.contents}</div>
                         <div>생성날짜 : ${data.createDate}</div>
                     </div>
@@ -139,6 +139,34 @@ const onClickTaskDelete = (e) => {
         const countEl = e.target.parentElement.parentElement.parentElement.parentElement.querySelector('h4 > span')
         countEl.textContent = Number(countEl.textContent) - 1
         e.target.parentElement.parentElement.remove();
+    })
+}
+
+const onClickTaskUpdate = (e) => {
+    const taskId = e.target.dataset.id;
+    const type = e.target.dataset.type;
+    const status = e.target.dataset.status;
+
+    let value = "";
+
+    if(status == 'ACTIVATE'){
+        value = 'COMPLETION';
+    }else if (status == 'COMPLETION') {
+        value = 'ACTIVATE';
+    }
+
+    fetch(`/api/task/${taskId}`, {
+        method : "PATCH",
+        headers : {
+            "Content-type" : "application/json",
+            "Authorization" : localStorage.getItem("token")
+        },
+        body : JSON.stringify({
+            type,
+            value
+        })
+    }).then(() => {
+        getTaskList(getTaskSearchData());
     })
 }
 

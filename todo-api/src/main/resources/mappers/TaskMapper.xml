@@ -41,7 +41,8 @@
         <if test="condition != 'all'">
             AND status = #{condition}
         </if>
-        ORDER BY orders ASC
+        ORDER BY
+            CASE WHEN status = 'ACTIVATE' THEN 1 ELSE 2 END
     </select>
 
     <select id="findTaskTotalCount" resultType="int">
