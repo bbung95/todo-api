@@ -11,4 +11,5 @@ import lombok.ToString;
 public class BoardSearchParam extends SearchParam {
 
     private Integer writer;
+    private String role;
 }

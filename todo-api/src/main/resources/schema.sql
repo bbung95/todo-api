@@ -17,16 +17,16 @@ CREATE TABLE `task` (
 CREATE TABLE `board` (
                          `id`	INT	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                          `writer`	INT	NOT NULL,
-                         `title`	VARCHAR(100)	NULL,
+                         `title`	VARCHAR(100) NOT NULL,
                          `create_date`	DATETIME	NULL,
                          `modify_date`	DATETIME	NULL
 );
 
 CREATE TABLE `users` (
                          `id`	INT	NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                         `username`	VARCHAR(30)	NULL,
-                         `password`	VARCHAR(255)	NULL,
-                         `nickname`	VARCHAR(100)	NULL,
-                         `create_date`	DATETIME	NULL,
-                         `role`	VARCHAR(20)	NULL
+                         `username`	VARCHAR(30)	NOT NULL,
+                         `password`	VARCHAR(255) NOT NULL,
+                         `nickname`	VARCHAR(100) NOT NULL,
+                         `create_date`	DATETIME NULL,
+                         `role`	VARCHAR(20)	NOT NULL
 );

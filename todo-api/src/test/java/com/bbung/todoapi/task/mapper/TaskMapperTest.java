@@ -1,6 +1,6 @@
 package com.bbung.todoapi.task.mapper;
 
-import com.bbung.todoapi.Entity.Task;
+import com.bbung.todoapi.entity.Task;
 import com.bbung.todoapi.domain.task.dto.TaskDto;
 import com.bbung.todoapi.domain.task.dto.TaskListDto;
 import com.bbung.todoapi.domain.task.dto.TaskSearchParam;

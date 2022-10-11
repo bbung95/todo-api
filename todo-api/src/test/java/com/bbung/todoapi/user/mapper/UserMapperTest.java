@@ -1,6 +1,6 @@
 package com.bbung.todoapi.user.mapper;
 
-import com.bbung.todoapi.Entity.User;
+import com.bbung.todoapi.entity.User;
 import com.bbung.todoapi.domain.user.dto.UserDto;
 import com.bbung.todoapi.domain.user.mapper.UserMapper;
 import org.junit.jupiter.api.DisplayName;

@@ -3,7 +3,7 @@ package com.bbung.todoapi.domain.board.mapper;
 import com.bbung.todoapi.domain.board.dto.BoardDto;
 import com.bbung.todoapi.domain.board.dto.BoardListDto;
 import com.bbung.todoapi.domain.board.dto.BoardSearchParam;
-import com.bbung.todoapi.Entity.Board;
+import com.bbung.todoapi.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

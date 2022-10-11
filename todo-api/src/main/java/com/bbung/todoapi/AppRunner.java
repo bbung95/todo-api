@@ -1,6 +1,7 @@
 package com.bbung.todoapi;
 
 import com.bbung.todoapi.domain.user.dto.UserFormDto;
+import com.bbung.todoapi.domain.user.enums.UserRole;
 import com.bbung.todoapi.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
@@ -18,9 +19,10 @@ public class AppRunner implements ApplicationRunner {
 
         UserFormDto userFormDto = new UserFormDto();
         userFormDto.setUsername("admin");
-        userFormDto.setPassword("admin1234");
+        userFormDto.setPassword("1234");
         userFormDto.setNickname("admin");
-        
+        userFormDto.setRole(UserRole.ADMIN.name());
+
         userService.saveUser(userFormDto);
     }
 }

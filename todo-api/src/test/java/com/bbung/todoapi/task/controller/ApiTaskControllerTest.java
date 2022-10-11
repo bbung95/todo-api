@@ -7,7 +7,6 @@ import com.bbung.todoapi.domain.task.enums.TaskImportance;
 import com.bbung.todoapi.domain.task.enums.TaskStatus;
 import com.bbung.todoapi.domain.task.enums.TaskUpdateType;
 import com.bbung.todoapi.domain.task.service.TaskService;
-import com.bbung.todoapi.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,10 +33,25 @@ class ApiTaskControllerTest {
     private TaskService taskService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private ObjectMapper objectMapper;
+
+//    @Test
+//    public void token() throws Exception {
+//
+//        UserLoginForm userLoginForm = new UserLoginForm();
+//        userLoginForm.setUsername("admin");
+//        userLoginForm.setPassword("1234");
+//
+//        String contentAsString = mockMvc.perform(post("/api/user/login")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(userLoginForm)))
+//                .andDo(print())
+//                .andReturn().getResponse().getContentAsString();
+//
+//        System.out.println("token = " + contentAsString);
+//
+////        return null;
+//    }
 
     @Test
     @DisplayName("Task 등록 테스트")

@@ -5,7 +5,7 @@ import com.bbung.todoapi.domain.board.exception.BoardNotFoundException;
 import com.bbung.todoapi.domain.board.mapper.BoardMapper;
 import com.bbung.todoapi.common.PageResponse;
 import com.bbung.todoapi.config.security.UserInfo;
-import com.bbung.todoapi.Entity.Board;
+import com.bbung.todoapi.entity.Board;
 import com.bbung.todoapi.domain.task.mapper.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -43,6 +43,7 @@ public class BoardService {
 
         UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         param.setWriter(userInfo.getId());
+        param.setRole(userInfo.getRole());
 
         List<BoardListDto> list = boardMapper.findByUserBoardList(param);
         int count = boardMapper.findByUserBoardTotalCount(param);

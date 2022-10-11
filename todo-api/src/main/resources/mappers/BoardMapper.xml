@@ -26,7 +26,11 @@
         SELECT
         *
         FROM board
-        WHERE writer = #{writer}
+        <where>
+            <if test="role != 'ADMIN' ">
+                AND writer = #{writer}
+            </if>
+        </where>
         ORDER BY create_date DESC
     </select>
 

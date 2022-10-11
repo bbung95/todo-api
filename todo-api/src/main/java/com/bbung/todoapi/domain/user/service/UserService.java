@@ -1,7 +1,7 @@
 package com.bbung.todoapi.domain.user.service;
 
 import com.bbung.todoapi.config.security.UserInfo;
-import com.bbung.todoapi.Entity.User;
+import com.bbung.todoapi.entity.User;
 import com.bbung.todoapi.domain.user.dto.UserUpdateFormDto;
 import com.bbung.todoapi.domain.user.enums.UserRole;
 import com.bbung.todoapi.domain.user.enums.UserUpdateType;
@@ -11,7 +11,6 @@ import com.bbung.todoapi.domain.user.dto.UserDto;
 import com.bbung.todoapi.domain.user.dto.UserFormDto;
 import com.bbung.todoapi.domain.user.dto.UserLoginForm;
 import com.bbung.todoapi.domain.user.exception.DuplicationUsername;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,8 +30,6 @@ public class UserService implements UserDetailsService {
     private final ModelMapper modelMapper;
 
     private final PasswordEncoder passwordEncoder;
-
-    private final ObjectMapper objectMapper;
 
     @Override
     public UserInfo loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,9 +63,10 @@ public class UserService implements UserDetailsService {
         });
 
         userForm.setPassword(passwordEncoder.encode(userForm.getPassword()));
-
         User user = modelMapper.map(userForm, User.class);
-        user.setRole(UserRole.MEMBER.name());
+        if(user.getRole() == null){
+            user.setRole(UserRole.MEMBER.name());
+        }
 
         return userMapper.insertUser(user);
     }

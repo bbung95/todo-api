@@ -1,4 +1,4 @@
-package com.bbung.todoapi.Entity;
+package com.bbung.todoapi.entity;
 
 import lombok.*;
 

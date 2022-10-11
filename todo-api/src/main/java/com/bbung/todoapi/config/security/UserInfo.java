@@ -26,11 +26,7 @@ public class UserInfo implements UserDetails {
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
-        if(username.equals("admin")){
-            authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }else{
-            authorityList.add(new SimpleGrantedAuthority("ROLE_" + this.role));
-        }
+        authorityList.add(new SimpleGrantedAuthority("ROLE_" + this.role));
 
         return authorityList;
     }

@@ -21,7 +21,7 @@ public class TaskListDto {
     private String importance;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
-    private int orders;
+    private Integer orders;
 
     public void setStatus(String status){
 

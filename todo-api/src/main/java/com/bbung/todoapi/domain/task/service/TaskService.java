@@ -2,7 +2,7 @@ package com.bbung.todoapi.domain.task.service;
 
 import com.bbung.todoapi.domain.board.service.BoardService;
 import com.bbung.todoapi.common.PageResponse;
-import com.bbung.todoapi.Entity.Task;
+import com.bbung.todoapi.entity.Task;
 import com.bbung.todoapi.domain.task.dto.*;
 import com.bbung.todoapi.domain.task.enums.TaskSearchType;
 import com.bbung.todoapi.domain.task.enums.TaskUpdateType;

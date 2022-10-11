@@ -1,6 +1,6 @@
 package com.bbung.todoapi.domain.user.mapper;
 
-import com.bbung.todoapi.Entity.User;
+import com.bbung.todoapi.entity.User;
 import com.bbung.todoapi.domain.user.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
